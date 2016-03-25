@@ -13,7 +13,7 @@ void testStacklstPop(StackLst& s)
 	try
 	{
 		cout << "\nTest pop() stack" << endl;
-		cout << "stack.pop() = " << s.pop();
+		s.pop();
 	}
 	catch (exception& e)
 	{
