@@ -1,20 +1,21 @@
-#ifndef TSTACK_H_201511
-#define TSTACK_H_201511
-#define _SCL_SECURE_NO_WARNINGs
+#ifndef T_STACK_H_2016
+#define T_SHTCK_H_2016
 
 template <typename T>
-class tstack
+class tStack
 {
 public:
-	tstack() = default;
-	tstack(const tstack<T> &rhs) = default;
-	tstack<T> & operator=(const tstack<T> & rhs) = default;
-	~tstack();
+	tStack() = default;
+	~tStack();
 
-	bool isempty();
+	//tStack(const tStack<T>& rhs);
+	//tStack<T>& operator=(const tStack<T>& rhs);
+
+
+	bool isEmpty();
 	void push(const T v);
-	T pop();
-	T top();
+	void pop();
+	T top() const;
 
 private:
 	int size{ 0 };
@@ -22,26 +23,27 @@ private:
 	int itop{ 0 };
 };
 
-//template<typename T> tstack:<T>::tstack(const& tstack rhs);
-
-template<typename T> tstack<T>::~tstack()
+template<typename T>
+inline tStack<T>::~tStack()
 {
 	delete[] data_;
 }
 
-template<typename T> void tstack<T>::push(const T v)
+template<typename T>
+inline bool tStack<T>::isEmpty()
 {
-	if (size == 0)
+	return 0 == size;
+}
+
+template<typename T> void tStack<T>::push(const T v)
+{
+	if (isEmpty())
 	{
 		size++;
-		T* newData{ new T[size] };
-		delete[] data_;
-		data_ = newData;
-		data_[itop] = v;
+		data_ = new T[size];
 	}
 	if (itop == size)
 	{
-
 		T* newData{ new T[size * 2] };
 		for (int i{ 0 }; i < size; i++)
 		{
@@ -55,28 +57,26 @@ template<typename T> void tstack<T>::push(const T v)
 	itop++;
 }
 
-template<typename T> bool tstack<T>::isempty()
+template<typename T>
+inline void tStack<T>::pop()
 {
-	return 0 == itop;
-}
-
-template<typename T> T tstack<T>::pop()
-{
-	if (isempty())
+	if (isEmpty())
 	{
-		throw std::exception("Stack is empty!");
+		throw std::exception("Stack is empty");
 	}
 	itop--;
-	return data_[itop];
 }
 
-template<typename T> T tstack<T>::top()
+template<typename T>
+inline T tStack<T>::top() const
 {
-	if (isempty())
+	if (isEmpty())
 	{
-		throw std::exception("Stack is empty!");
+		throw std::exception("Stack is empty");
 	}
 	return data_[itop - 1];
 }
 
-#endif TSTACK_H_201511
+
+
+#endif T_STACK_H_2016

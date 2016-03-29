@@ -15,6 +15,9 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="TemplateStackOld.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="TemplateStack.h">
       <Filter>Header Files</Filter>
     </ClInclude>

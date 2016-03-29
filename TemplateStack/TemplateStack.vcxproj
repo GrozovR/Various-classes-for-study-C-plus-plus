@@ -118,6 +118,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="TemplateStackOld.h" />
     <ClInclude Include="TemplateStack.h" />
   </ItemGroup>
   <ItemGroup>
