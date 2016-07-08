@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Complex", "Complex\Complex.vcxproj", "{C66E7CEB-76E5-4688-96E5-6007376796F2}"
 EndProject
@@ -22,6 +22,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "QueueList", "queueList\queueList.vcxproj", "{625FA9CD-BB25-4B3D-A6A9-61FC7AB2C8B5}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WordFrequencyDictionary", "WordFrequencyDictionary\WordFrequencyDictionary.vcxproj", "{ABCDB376-985C-41B3-ADEC-3F5429548EA5}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sort", "Sort\Sort.vcxproj", "{9FDBC584-C88F-4008-B59A-8703C7F91779}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -107,6 +109,12 @@ Global
 		{ABCDB376-985C-41B3-ADEC-3F5429548EA5}.Release|Win32.Build.0 = Release|Win32
 		{ABCDB376-985C-41B3-ADEC-3F5429548EA5}.Release|x64.ActiveCfg = Release|x64
 		{ABCDB376-985C-41B3-ADEC-3F5429548EA5}.Release|x64.Build.0 = Release|x64
+		{9FDBC584-C88F-4008-B59A-8703C7F91779}.Debug|Win32.ActiveCfg = Debug|Win32
+		{9FDBC584-C88F-4008-B59A-8703C7F91779}.Debug|Win32.Build.0 = Debug|Win32
+		{9FDBC584-C88F-4008-B59A-8703C7F91779}.Debug|x64.ActiveCfg = Debug|Win32
+		{9FDBC584-C88F-4008-B59A-8703C7F91779}.Release|Win32.ActiveCfg = Release|Win32
+		{9FDBC584-C88F-4008-B59A-8703C7F91779}.Release|Win32.Build.0 = Release|Win32
+		{9FDBC584-C88F-4008-B59A-8703C7F91779}.Release|x64.ActiveCfg = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

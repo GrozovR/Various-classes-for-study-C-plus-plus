@@ -11,3 +11,4 @@ Repository contains the following classes with tests:
 * Stack (list implementation);
 * Template Stack (array implementation); 
 * Word Frequency Dictionary (counting the numbers of each words in text).
+* SORT (Unix utility)
