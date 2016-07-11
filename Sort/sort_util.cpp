@@ -1,5 +1,6 @@
 #include "sort_util.h"
 
+
 //for ignore_leading_blanks
 struct No_case{
 	bool operator() (const std::string& x, const std::string& y) const
@@ -16,14 +17,6 @@ struct No_case{
 		return true;
 	}
 };
-void sort_and_print(std::vector<std::string>& vc)
-{
-	std::sort(vc.begin(), vc.end(), No_case());
-
-	for (const auto& s : vc)
-		std::cout << s << std::endl;
-}
-
 
 CSortUtility::~CSortUtility()
 {
@@ -63,7 +56,7 @@ void CSortUtility::print()
 		//write in file		
 		std::ofstream ofs(m_outFilePath);
 		if (ofs) {
-			for (std::string line : m_dataFromFiles)
+			for (const auto line : m_dataFromFiles)
 				ofs << line << std::endl;
 		}
 		else {
@@ -74,7 +67,7 @@ void CSortUtility::print()
 	}
 	else {
 		//write in console
-		for (std::string line : m_dataFromFiles)
+		for (const auto line : m_dataFromFiles)
 		{
 			std::cout << line << std::endl << std::endl;
 		}
@@ -134,12 +127,10 @@ void CSortUtility::readFile(std::string inStr)
 		{
 			if (m_ignoreLeadingBlanks)
 			{
-				
+				trim(line);
+				if (line == "") continue;
 			}
-			if (m_ignoreCase)
-			{
-
-			}			
+		
 			m_dataFromFiles.push_back(line);
 		}
 	}
@@ -147,10 +138,22 @@ void CSortUtility::readFile(std::string inStr)
 	sort();
 }
 
+void CSortUtility::trim(std::string &s)
+{
+	s.erase(s.begin(), std::find_if(s.begin(), s.end(), std::not1(std::ptr_fun<int, int>(std::isspace))));
+	s.erase(std::find_if(s.rbegin(), s.rend(), std::not1(std::ptr_fun<int, int>(std::isspace))).base(), s.end());
+}
+
 void CSortUtility::sort()
 {
-	if (m_reverse) std::sort(m_dataFromFiles.rbegin(), m_dataFromFiles.rend());
-	else std::sort(m_dataFromFiles.begin(), m_dataFromFiles.end());
+	if (m_ignoreCase){
+		if (m_reverse) std::sort(m_dataFromFiles.rbegin(), m_dataFromFiles.rend(), No_case());
+		else std::sort(m_dataFromFiles.begin(), m_dataFromFiles.end(), No_case());
+	}
+	else{
+		if (m_reverse) std::sort(m_dataFromFiles.rbegin(), m_dataFromFiles.rend());
+		else std::sort(m_dataFromFiles.begin(), m_dataFromFiles.end());
+	}
 }
 
 bool CSortUtility::fileExists(const char * fname) const

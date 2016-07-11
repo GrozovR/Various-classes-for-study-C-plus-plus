@@ -4,17 +4,55 @@ void main(int args, char** argv)
 {
 	CSortUtility app;
 
-	app.setReverse(true);
-	app.setIgnoreLeadBlanks(true);
-	app.setIgnoreLetterCase(true);
+	std::string line;
+	bool syntaxError{ false };
 
-	app.setOutFile("D:\\piska\\11.txt");
+	for (int i = 1; i < args; i++)
+	{
+		std::string command = argv[i];
 
-	app.setPath("D:\\1.txt");
-	app.setPath("D:\\2.txt");
-	app.setPath("D:\\3.txt");
-	//app.setPath("D:\\11.txt");
+		if (command == "-r"){
+			app.setReverse(true);
+		}
+		else if (command == "-f"){
+			app.setIgnoreLetterCase(true);
+		}
+		else if (command == "-b"){
+			app.setIgnoreLeadBlanks(true);
+		}
+		else if (command == "-h"){
+			app.help();
+		}
+		else if (command == "-i"){
+			if (i + 1 < args){
+				i++;
+				std::string path = argv[i];
+				app.setPath(path);
+			}
+			else{
+				std::cout << "Syntax error! Missing input file path argument!" << std::endl;
+				syntaxError = true;
+				break;
+			}
+		}
+		else if (command == "-o"){
+			if (i + 1 < args){
+				i++;
+				std::string path = argv[i];
+				app.setOutFile(path);
+			}
+			else{
+				std::cout << "Syntax error! Missing out file path argument!" << std::endl;
+				syntaxError = true;
+				break;
+			}
+		}
+		else{
+			std::cout << "Syntax error! Wrong command: " << command << std::endl << std::endl;
+			syntaxError = true;
+			break;
+		}
+	}
 
-	app.run();
-		
+	if (!syntaxError) app.run();
 }
