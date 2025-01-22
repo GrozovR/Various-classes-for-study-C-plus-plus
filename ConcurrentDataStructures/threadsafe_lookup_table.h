@@ -1,4 +1,4 @@
-// TODO: description
+// threadsafe lookup table
 
 #pragma once
 #include <functional>

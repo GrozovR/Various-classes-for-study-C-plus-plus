@@ -30,6 +30,9 @@
     <ClInclude Include="threadsafe_lookup_table.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="threadsafe_list.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ConcurrentDataStructures.cpp">

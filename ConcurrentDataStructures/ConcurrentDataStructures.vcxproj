@@ -141,6 +141,7 @@
   <ItemGroup>
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="threadsafe_list.h" />
     <ClInclude Include="threadsafe_lookup_table.h" />
     <ClInclude Include="threadsafe_queue.h" />
     <ClInclude Include="threadsafe_stack.h" />
