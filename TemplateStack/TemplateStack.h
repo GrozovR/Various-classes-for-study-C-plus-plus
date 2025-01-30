@@ -77,6 +77,4 @@ inline T tStack<T>::top() const
 	return data_[itop - 1];
 }
 
-
-
 #endif T_STACK_H_2016
