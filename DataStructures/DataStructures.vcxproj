@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{fc64a8f5-e443-4ba7-ac2c-1e56dcf8e768}</ProjectGuid>
-    <RootNamespace>ConcurrentDataStructures</RootNamespace>
+    <ProjectGuid>{53486761-0817-40ad-a848-07716899eb96}</ProjectGuid>
+    <RootNamespace>DataStructures</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -139,24 +139,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CircularBuffer.h" />
     <ClInclude Include="framework.h" />
-    <ClInclude Include="lockfree_stack.h" />
+    <ClInclude Include="headers\complex.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="threadsafe_list.h" />
-    <ClInclude Include="threadsafe_lookup_table.h" />
-    <ClInclude Include="threadsafe_queue.h" />
-    <ClInclude Include="threadsafe_stack.h" />
-    <ClInclude Include="thread_pool.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ConcurrentDataStructures.cpp" />
+    <ClCompile Include="DataStructures.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="thread_pool.cpp" />
+    <ClCompile Include="src\complex.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
