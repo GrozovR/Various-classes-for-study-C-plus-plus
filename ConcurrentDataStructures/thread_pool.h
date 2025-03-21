@@ -7,6 +7,8 @@
 #include <thread>
 #include <vector>
 #include <condition_variable>
+#include "threadsafe_queue.h"
+#include "thread_joiner.h"
 
 namespace CDS {
 
@@ -75,6 +77,31 @@ private:
 	std::vector<std::thread> workers_;
 
 	void WorkerRoutine();
+};
+
+class thread_pool_2
+{
+	thread_pool_2();
+	~thread_pool_2() { done = true; }
+
+	thread_pool_2(const thread_pool_2&) = delete;
+	thread_pool_2& operator=(const thread_pool_2&) = delete;
+
+	template<typename FunctionType>
+	void submit(FunctionType f)
+	{
+		work_queue.push(std::function<void()>(f));
+	}
+
+private:
+	// ѕор€док членов важен дл€ гарантии работы!
+	// TODO: проверить, как уничтожаетс€ класс
+	std::atomic_bool done;
+	threadsafe_queue<std::function<void()>> work_queue;
+	std::vector<std::thread> threads;
+	join_threads joiner;
+
+	void worker_thread();
 };
 
 }
