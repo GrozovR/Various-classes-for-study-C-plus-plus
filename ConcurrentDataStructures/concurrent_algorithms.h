@@ -3,26 +3,9 @@
 #include <thread>
 #include <vector>
 #include <future>
+#include "thread_pool.h"
 
 namespace CDS {
-
-struct join_threads
-{
-	explicit join_threads(std::vector<std::thread>& _threads)
-		: threads(_threads)
-	{
-	}
-
-	~join_threads()
-	{
-		for (auto& thread : threads) {
-			if (thread.joinable())
-				thread.join();
-		}
-	}
-
-	std::vector<std::thread>& threads;
-};
 
 template<typename Iterator, typename Func>
 void parrallel_for_each(Iterator first, Iterator last, Func f)
@@ -156,6 +139,55 @@ Iterator parrallel_find(Iterator first, Iterator last, MatchType match)
 		return false;
 	}
 	return result.get_future().get();
+}
+
+// -----
+
+template<typename T>
+struct sorter
+{
+	std::list<T> do_sort(std::list<T>& chunk_data)
+	{
+		if(chink_data.empty())
+			return chunk_data;
+
+		std::list<T> result;
+		result.splice(result.begin(), chunk_data, chunk_data.begin());
+		const T& partition_val = *result.begin();
+
+		typename std::list<T>::iterator divide_point =
+			std::partition(chunk_data.begin(), chunk_data.end(),
+				[&](const T& val) { return val < partition_val; } );
+		std::list<T> new_lower_chunk;
+		new_lower_chunk.splice(new_lower_chunk.end(),
+			chunk_data, chunk_data.begin(), divide_point);
+
+		std::future<std::list<T>> new_lower =
+			pool.submit(std::bind(&sorter::do_sort, this,
+				std::move(new_lower_chunk)));
+
+		std::list<T> new_higher(do_sort(chunk_data));
+
+		result.splice(result.end(),new_higher);
+		while(!new_lower.wait_for(std::chrono::seconds(0))
+			== std::future::timeout)
+		{
+			pool.run_pending_task();
+		}
+		result.splice(result.begin(), new_lower.get());
+		return result;
+	}
+	thread_pool_3 pool;
+};
+
+template<typename T>
+std::list<T> parallel_quick_sort(std::list<T> input)
+{
+	if(input.empty())
+		return input;
+
+	sorter<T> s;
+	return s.do_sort(input);
 }
 
 }

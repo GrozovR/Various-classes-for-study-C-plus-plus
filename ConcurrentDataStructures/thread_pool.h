@@ -1,12 +1,15 @@
 #pragma once
 
 #include <cassert>
+#include <condition_variable>
 #include <deque>
 #include <mutex>
 #include <functional>
+#include <future>
 #include <thread>
+#include <type_traits>
 #include <vector>
-#include <condition_variable>
+
 #include "threadsafe_queue.h"
 #include "thread_joiner.h"
 
@@ -101,6 +104,80 @@ private:
 	std::vector<std::thread> threads;
 	join_threads joiner;
 
+	void worker_thread();
+};
+
+
+// --------------
+
+class function_wrapper
+{
+	struct impl_base
+	{
+		virtual void call() = 0;
+		virtual ~impl_base() {}
+	};
+
+	template<typename F>
+	struct impl_type : impl_base
+	{
+		F f;
+		impl_type(F&& f_) : f(std::move(f_)) {}
+		void call() { f (); }
+	};
+
+public:
+	function_wrapper() = default;
+
+	template<typename F>
+	function_wrapper(F&& f)
+		: impl(new impl_type<F>(std::move(f)))
+	{
+	}
+	
+	function_wrapper(function_wrapper&& other) :
+		impl(std::move(other.impl))
+	{
+	}
+	function_wrapper& operator=(function_wrapper&& other)
+	{
+		impl = std::move(other.impl);
+		return *this;
+	}
+	function_wrapper(const function_wrapper&) = delete;
+	function_wrapper(function_wrapper&) = delete;
+	function_wrapper& operator=(const function_wrapper&) = delete;
+
+
+	void operator()() { impl->call(); }
+
+private:
+	std::unique_ptr<impl_base> impl;
+};
+
+class thread_pool_3
+{
+public:
+	template<typename FuncType>
+	auto submit(FuncType f) -> std::future<typename std::invoke_result<FuncType>::type>
+	{
+		using result_type = typename std::invoke_result<FuncType()>::type;
+		std::packaged_task<result_type()> task(std::move(f));
+		std::future<result_type> res( task.get_future());
+		work_queue.push(std::move(task));
+		return res;
+	}
+
+	void run_pending_task();
+
+	// TODO: incompleted
+	
+private:
+	std::atomic_bool done;
+	threadsafe_queue<function_wrapper> work_queue;
+	std::vector<std::thread> threads;
+	join_threads joiner;
+	
 	void worker_thread();
 };
 
