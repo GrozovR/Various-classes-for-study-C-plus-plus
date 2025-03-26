@@ -42,6 +42,9 @@
     <ClInclude Include="concurrent_algorithms.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="interruptible_thread.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ConcurrentDataStructures.cpp">
@@ -55,6 +58,9 @@
     </ClCompile>
     <ClCompile Include="thread_joiner.h">
       <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="interruptible_thread.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
